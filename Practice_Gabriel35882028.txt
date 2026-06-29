@@ -634,6 +634,16 @@ MariaDB [FACT]> select count(distinct book_subject) as 'Number of Subjects' from
 
 #25
 
+MariaDB [FACT]> SELECT COUNT(BOOK_NUM) AS "Available Books"
+    -> FROM BOOK
+    -> WHERE PAT_ID IS NULL;
++-----------------+
+| Available Books |
++-----------------+
+|              14 |
++-----------------+
+1 row in set (0.000 sec)
+
 
 #26
 
@@ -681,6 +691,31 @@ MariaDB [FACT]> select book_subject, count(book_subject) as 'Books in Subject'  
 
 #30
 
+MariaDB [FACT]> select au_id, count(book_num) as 'Books Written'
+    -> from writes
+    -> group by au_id
+    -> order by count(book_num) desc,
+    -> au_id asc;
++-------+---------------+
+| au_id | Books Written |
++-------+---------------+
+|   262 |             3 |
+|   460 |             3 |
+|   185 |             2 |
+|   229 |             2 |
+|   251 |             2 |
+|   383 |             2 |
+|   394 |             2 |
+|   559 |             2 |
+|   218 |             1 |
+|   273 |             1 |
+|   284 |             1 |
+|   438 |             1 |
+|   581 |             1 |
+|   592 |             1 |
+|   603 |             1 |
++-------+---------------+
+15 rows in set (0.002 sec)
 
 
 
