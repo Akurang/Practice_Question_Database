@@ -612,5 +612,86 @@ MariaDB [FACT]> select au_id, au_fname, au_lname, au_birthyear
 +-------+----------+-----------+--------------+
 15 rows in set (0.000 sec)
 
+#23
+
+MariaDB [FACT]> select count(*) as 'Number of Books' from book;
++-----------------+
+| Number of Books |
++-----------------+
+|              20 |
++-----------------+
+1 row in set (0.000 sec)
+
+#24
+
+MariaDB [FACT]> select count(distinct book_subject) as 'Number of Subjects' from book;
++--------------------+
+| Number of Subjects |
++--------------------+
+|                  4 |
++--------------------+
+1 row in set (0.000 sec)
+
+#25
+
+
+#26
+
+MariaDB [FACT]> select max(book_cost) as 'Most Expensive' 
+    -> from book;
++----------------+
+| Most Expensive |
++----------------+
+|         129.95 |
++----------------+
+1 row in set (0.000 sec)
+
+#27
+MariaDB [FACT]> select min(book_cost) as 'Most Expensive'  from book;
++----------------+
+| Most Expensive |
++----------------+
+|          49.95 |
++----------------+
+1 row in set (0.003 sec)
+
+#28
+
+MariaDB [FACT]> select count(distinct pat_id)as 'Different Patrons' from checkout;
++-------------------+
+| Different Patrons |
++-------------------+
+|                33 |
++-------------------+
+1 row in set (0.000 sec)
+
+#29
+
+MariaDB [FACT]> select book_subject, count(book_subject) as 'Books in Subject'  from book group by book_subject order by count(book_subject) desc;
++--------------+------------------+
+| book_subject | Books in Subject |
++--------------+------------------+
+| Programming  |                9 |
+| Database     |                4 |
+| Cloud        |                4 |
+| Middleware   |                3 |
++--------------+------------------+
+4 rows in set (0.002 sec)
+
+
+#30
+
+
+
+
+#31
+
+MariaDB [FACT]> select sum(book_cost) as 'Library Value' from book;
++---------------+
+| Library Value |
++---------------+
+|       1499.00 |
++---------------+
+1 row in set (0.001 sec)
 
 
