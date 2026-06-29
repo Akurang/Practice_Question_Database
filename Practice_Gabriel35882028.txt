@@ -435,5 +435,182 @@ MariaDB [FACT]> select book_num, book_title, book_year, book_subject, book_cost 
 3 rows in set (0.001 sec)
 
 #15
+MariaDB [FACT]> select au_id, au_fname, au_lname, au_birthyear from author where au_birthyear between 1980 and 1989;
++-------+----------+----------+--------------+
+| au_id | au_fname | au_lname | au_birthyear |
++-------+----------+----------+--------------+
+|   218 | Rachel   | Beatney  |         1983 |
+|   383 | Neal     | Walsh    |         1980 |
+|   394 | Robert   | Lake     |         1982 |
+|   438 | Perry    | Pearson  |         1986 |
+|   460 | Connie   | Paulsen  |         1983 |
+|   581 | Manish   | Aggerwal |         1984 |
+|   603 | Julia    | Palca    |         1988 |
++-------+----------+----------+--------------+
+7 rows in set (0.000 sec)
+
+#16
+
+MariaDB [FACT]> select book_num, book_title, book_year
+    -> from book
+    -> where book_title like '%database%';
++----------+-----------------------------------------------------------------------+-----------+
+| book_num | book_title                                                            | book_year |
++----------+-----------------------------------------------------------------------+-----------+
+|     5236 | Database in the Cloud                                                 |      2012 |
+|     5237 | Mastering the database environment                                    |      2013 |
+|     5243 | DATABASES in Theory                                                   |      2013 |
+|     5248 | What You Always Wanted to Know About Database, But Were Afraid to Ask |      2014 |
+|     5252 | Beyond the Database Veil                                              |      2014 |
++----------+-----------------------------------------------------------------------+-----------+
+5 rows in set (0.000 sec)
+
+
+#17
+
+MariaDB [FACT]> select pat_id, pat_fname, pat_lname
+    -> from patron
+    -> where pat_type = 'Student';
++--------+-----------+------------+
+| pat_id | pat_fname | pat_lname  |
++--------+-----------+------------+
+|   1166 | Vera      | Alvarado   |
+|   1171 | Peggy     | Marsh      |
+|   1172 | Tony      | Miles      |
+|   1174 | Betsy     | Malone     |
+|   1180 | Nadine    | Blair      |
+|   1181 | Allen     | Horne      |
+|   1182 | Jamal     | Melendez   |
+|   1184 | Jimmie    | Love       |
+|   1185 | Sandra    | Yang       |
+|   1200 | Lorenzo   | Torres     |
+|   1201 | Shelby    | Noble      |
+|   1202 | Holly     | Anthony    |
+|   1203 | Tyler     | Pope       |
+|   1204 | Thomas    | Duran      |
+|   1205 | Claire    | Gomez      |
+|   1207 | Iva       | Ramos      |
+|   1208 | Ollie     | Cantrell   |
+|   1209 | Rena      | Mathis     |
+|   1210 | Keith     | Cooley     |
+|   1211 | Jerald    | Gaines     |
+|   1212 | Iva       | McClain    |
+|   1213 | Desiree   | Rivas      |
+|   1214 | Marina    | King       |
+|   1215 | Maureen   | Downs      |
+|   1218 | Angel     | Terrell    |
+|   1219 | Desiree   | Harrington |
+|   1220 | Carlton   | Morton     |
+|   1221 | Gloria    | Pitts      |
+|   1222 | Zach      | Kelly      |
+|   1223 | Jose      | Hays       |
+|   1224 | Jewel     | England    |
+|   1225 | Wilfred   | Fuller     |
+|   1226 | Jeff      | Owens      |
+|   1227 | Alicia    | Dickson    |
+|   1228 | Homer     | Goodman    |
+|   1229 | Gerald    | Burke      |
+|   1237 | Brandi    | Larson     |
+|   1238 | Erika     | Bowen      |
+|   1239 | Elton     | Irwin      |
+|   1240 | Jan       | Joyce      |
+|   1241 | Irene     | West       |
+|   1242 | Mario     | King       |
+|   1243 | Roberto   | Kennedy    |
+|   1244 | Leon      | Richmond   |
++--------+-----------+------------+
+44 rows in set (0.000 sec)
+
+#18
+
+MariaDB [FACT]> select pat_id, pat_fname, pat_lname, pat_type
+    -> from patron
+    -> where pat_lname like 'c%';
++--------+-----------+-----------+----------+
+| pat_id | pat_fname | pat_lname | pat_type |
++--------+-----------+-----------+----------+
+|   1160 | robert    | carter    | Faculty  |
+|   1208 | Ollie     | Cantrell  | Student  |
+|   1210 | Keith     | Cooley    | STUdent  |
++--------+-----------+-----------+----------+
+3 rows in set (0.000 sec)
+
+#19
+
+MariaDB [FACT]> select au_id, au_fname, au_lname from author where au_birthyear is NULL;
++-------+----------+-----------+
+| au_id | au_fname | au_lname  |
++-------+----------+-----------+
+|   229 | Carmine  | Salvadore |
+|   262 | Xia      | Chiang    |
+|   559 | Rachel   | McGill    |
++-------+----------+-----------+
+3 rows in set (0.001 sec)
+
+#20
+
+MariaDB [FACT]> select au_id, au_fname, au_lname
+    -> from author
+    -> where au_birthyear is not NULL;
++-------+----------+-----------+
+| au_id | au_fname | au_lname  |
++-------+----------+-----------+
+|   185 | Benson   | Reeves    |
+|   218 | Rachel   | Beatney   |
+|   251 | Hugo     | Bruer     |
+|   273 | Reba     | Durante   |
+|   284 | Trina    | Tankersly |
+|   383 | Neal     | Walsh     |
+|   394 | Robert   | Lake      |
+|   438 | Perry    | Pearson   |
+|   460 | Connie   | Paulsen   |
+|   581 | Manish   | Aggerwal  |
+|   592 | Lawrence | Sheel     |
+|   603 | Julia    | Palca     |
++-------+----------+-----------+
+12 rows in set (0.000 sec)
+
+#21
+
+MariaDB [FACT]> select check_num, book_num, pat_id, check_out_date, check_due_date from checkout where check_in_date is null order by book_num asc;
++-----------+----------+--------+----------------+----------------+
+| check_num | book_num | pat_id | check_out_date | check_due_date |
++-----------+----------+--------+----------------+----------------+
+|     91068 |     5238 |   1229 | 2015-05-24     | 2015-05-31     |
+|     91053 |     5240 |   1212 | 2015-05-09     | 2015-05-16     |
+|     91066 |     5242 |   1228 | 2015-05-19     | 2015-05-26     |
+|     91061 |     5246 |   1172 | 2015-05-15     | 2015-05-22     |
+|     91059 |     5249 |   1207 | 2015-05-10     | 2015-05-17     |
+|     91067 |     5252 |   1229 | 2015-05-24     | 2015-05-31     |
++-----------+----------+--------+----------------+----------------+
+6 rows in set (0.001 sec)
+
+#22
+
+MariaDB [FACT]> select au_id, au_fname, au_lname, au_birthyear
+    -> from author
+    -> order by au_birthyear desc,
+    -> au_lname asc;
++-------+----------+-----------+--------------+
+| au_id | au_fname | au_lname  | au_birthyear |
++-------+----------+-----------+--------------+
+|   185 | Benson   | Reeves    |         1990 |
+|   603 | Julia    | Palca     |         1988 |
+|   438 | Perry    | Pearson   |         1986 |
+|   581 | Manish   | Aggerwal  |         1984 |
+|   218 | Rachel   | Beatney   |         1983 |
+|   460 | Connie   | Paulsen   |         1983 |
+|   394 | Robert   | Lake      |         1982 |
+|   383 | Neal     | Walsh     |         1980 |
+|   592 | Lawrence | Sheel     |         1976 |
+|   251 | Hugo     | Bruer     |         1972 |
+|   273 | Reba     | Durante   |         1969 |
+|   284 | Trina    | Tankersly |         1961 |
+|   262 | Xia      | Chiang    |         NULL |
+|   559 | Rachel   | McGill    |         NULL |
+|   229 | Carmine  | Salvadore |         NULL |
++-------+----------+-----------+--------------+
+15 rows in set (0.000 sec)
+
 
 
