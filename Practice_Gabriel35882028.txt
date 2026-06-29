@@ -1,0 +1,439 @@
+MariaDB [(none)]> create database FACT;
+Query OK, 1 row affected (0.007 sec)
+
+Takyi@Akurang-Pro ~ % sed -i '' 's/GETDATE()/CURDATE()/g' /Users/Takyi/Downloads/Fact_SQL-1.sql
+
+Takyi@Akurang-Pro ~ % perl -pi -e "s/'(\d{2})\/(\d{2})\/(\d{4})'/'\3-\1-\2'/g" /Users/Takyi/Downloads/Fact_SQL-1.sql
+
+Takyi@Akurang-Pro ~ % mariadb  FACT < /Users/Takyi/Downloads/Fact_SQL-1.sql;
+
+MariaDB [(none)]> use FACT;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+#1
+MariaDB [FACT]> select book_title, book_cost, book_year
+    -> from book;
++-----------------------------------------------------------------------+-----------+-----------+
+| book_title                                                            | book_cost | book_year |
++-----------------------------------------------------------------------+-----------+-----------+
+| Beginner's Guide to JAVA                                              |     59.95 |      2012 |
+| Database in the Cloud                                                 |     79.95 |      2012 |
+| Mastering the database environment                                    |     89.95 |      2013 |
+| Conceptual Programming                                                |     59.95 |      2013 |
+| J++ in Mobile Apps                                                    |     49.95 |      2013 |
+| iOS Programming                                                       |     79.95 |      2013 |
+| JAVA First Steps                                                      |     49.95 |      2013 |
+| C# in Middleware Deployment                                           |     59.95 |      2013 |
+| DATABASES in Theory                                                   |    129.95 |      2013 |
+| Cloud-based Mobile Applications                                       |     69.95 |      2013 |
+| The Golden Road to Platform independence                              |    119.95 |      2014 |
+| Capture the Cloud                                                     |     69.95 |      2014 |
+| Shining Through the Cloud: Sun Programming                            |    109.95 |      2014 |
+| What You Always Wanted to Know About Database, But Were Afraid to Ask |     49.95 |      2014 |
+| Starlight Applications                                                |     69.95 |      2014 |
+| Reengineering the Middle Tier                                         |     89.95 |      2014 |
+| Thoughts on Revitalizing Ruby                                         |     59.95 |      2014 |
+| Beyond the Database Veil                                              |     69.95 |      2014 |
+| Virtual Programming for Virtual Environments                          |     79.95 |      2014 |
+| Coding Style for Maintenance                                          |     49.95 |      2015 |
++-----------------------------------------------------------------------+-----------+-----------+
+20 rows in set (0.002 sec)
+
+#2
+MariaDB [FACT]> select pat_fname, pat_lname
+    -> from patron;
++-----------+------------+
+| pat_fname | pat_lname  |
++-----------+------------+
+| robert    | carter     |
+| Kelsey    | Koch       |
+| Cedric    | Baldwin    |
+| Vera      | Alvarado   |
+| Alan      | Martin     |
+| Cory      | Barry      |
+| Peggy     | Marsh      |
+| Tony      | Miles      |
+| Betsy     | Malone     |
+| Nadine    | Blair      |
+| Allen     | Horne      |
+| Jamal     | Melendez   |
+| Helena    | Hughes     |
+| Jimmie    | Love       |
+| Sandra    | Yang       |
+| Lorenzo   | Torres     |
+| Shelby    | Noble      |
+| Holly     | Anthony    |
+| Tyler     | Pope       |
+| Thomas    | Duran      |
+| Claire    | Gomez      |
+| Iva       | Ramos      |
+| Ollie     | Cantrell   |
+| Rena      | Mathis     |
+| Keith     | Cooley     |
+| Jerald    | Gaines     |
+| Iva       | McClain    |
+| Desiree   | Rivas      |
+| Marina    | King       |
+| Maureen   | Downs      |
+| Angel     | Terrell    |
+| Desiree   | Harrington |
+| Carlton   | Morton     |
+| Gloria    | Pitts      |
+| Zach      | Kelly      |
+| Jose      | Hays       |
+| Jewel     | England    |
+| Wilfred   | Fuller     |
+| Jeff      | Owens      |
+| Alicia    | Dickson    |
+| Homer     | Goodman    |
+| Gerald    | Burke      |
+| Brandi    | Larson     |
+| Erika     | Bowen      |
+| Elton     | Irwin      |
+| Jan       | Joyce      |
+| Irene     | West       |
+| Mario     | King       |
+| Roberto   | Kennedy    |
+| Leon      | Richmond   |
++-----------+------------+
+50 rows in set (0.001 sec)
+
+#3
+MariaDB [FACT]> select check_num, check_out_date, check_due_date
+    -> from checkout;
++-----------+----------------+----------------+
+| check_num | check_out_date | check_due_date |
++-----------+----------------+----------------+
+|     91001 | 2015-03-31     | 2015-04-14     |
+|     91002 | 2015-03-31     | 2015-04-07     |
+|     91003 | 2015-03-31     | 2015-04-14     |
+|     91004 | 2015-03-31     | 2015-04-14     |
+|     91005 | 2015-03-31     | 2015-04-07     |
+|     91006 | 2015-04-05     | 2015-04-12     |
+|     91007 | 2015-04-05     | 2015-04-12     |
+|     91008 | 2015-04-05     | 2015-04-12     |
+|     91009 | 2015-04-05     | 2015-04-19     |
+|     91010 | 2015-04-05     | 2015-04-19     |
+|     91011 | 2015-04-05     | 2015-04-12     |
+|     91012 | 2015-04-08     | 2015-04-15     |
+|     91013 | 2015-04-10     | 2015-04-24     |
+|     91014 | 2015-04-11     | 2015-04-18     |
+|     91015 | 2015-04-11     | 2015-04-18     |
+|     91016 | 2015-04-13     | 2015-04-27     |
+|     91017 | 2015-04-14     | 2015-04-21     |
+|     91018 | 2015-04-14     | 2015-04-28     |
+|     91019 | 2015-04-14     | 2015-04-21     |
+|     91020 | 2015-04-16     | 2015-04-23     |
+|     91021 | 2015-04-16     | 2015-04-23     |
+|     91022 | 2015-04-16     | 2015-04-23     |
+|     91023 | 2015-04-16     | 2015-04-23     |
+|     91024 | 2015-04-21     | 2015-04-28     |
+|     91025 | 2015-04-21     | 2015-04-28     |
+|     91026 | 2015-04-21     | 2015-05-04     |
+|     91027 | 2015-04-21     | 2015-05-04     |
+|     91028 | 2015-04-22     | 2015-05-05     |
+|     91029 | 2015-04-22     | 2015-04-29     |
+|     91030 | 2015-04-22     | 2015-04-29     |
+|     91031 | 2015-04-23     | 2015-05-06     |
+|     91032 | 2015-04-23     | 2015-04-30     |
+|     91033 | 2015-04-23     | 2015-04-30     |
+|     91034 | 2015-04-23     | 2015-04-30     |
+|     91035 | 2015-04-24     | 2015-05-07     |
+|     91036 | 2015-04-24     | 2015-04-30     |
+|     91037 | 2015-04-28     | 2015-05-04     |
+|     91038 | 2015-04-28     | 2015-05-04     |
+|     91039 | 2015-04-28     | 2015-05-04     |
+|     91040 | 2015-04-28     | 2015-05-04     |
+|     91041 | 2015-04-28     | 2015-05-04     |
+|     91042 | 2015-04-29     | 2015-05-05     |
+|     91043 | 2015-04-29     | 2015-05-05     |
+|     91044 | 2015-04-30     | 2015-05-07     |
+|     91045 | 2015-04-30     | 2015-05-07     |
+|     91046 | 2015-04-30     | 2015-05-07     |
+|     91047 | 2015-04-30     | 2015-05-07     |
+|     91048 | 2015-05-04     | 2015-05-11     |
+|     91049 | 2015-05-04     | 2015-05-11     |
+|     91050 | 2015-05-08     | 2015-05-15     |
+|     91051 | 2015-05-08     | 2015-05-15     |
+|     91052 | 2015-05-08     | 2015-05-15     |
+|     91053 | 2015-05-09     | 2015-05-16     |
+|     91054 | 2015-05-09     | 2015-05-16     |
+|     91055 | 2015-05-09     | 2015-05-16     |
+|     91056 | 2015-05-10     | 2015-05-17     |
+|     91057 | 2015-05-10     | 2015-05-17     |
+|     91058 | 2015-05-10     | 2015-05-17     |
+|     91059 | 2015-05-10     | 2015-05-17     |
+|     91060 | 2015-05-15     | 2015-05-22     |
+|     91061 | 2015-05-15     | 2015-05-22     |
+|     91062 | 2015-05-15     | 2015-05-22     |
+|     91063 | 2015-05-15     | 2015-05-22     |
+|     91064 | 2015-05-17     | 2015-05-31     |
+|     91065 | 2015-05-17     | 2015-05-24     |
+|     91066 | 2015-05-19     | 2015-05-26     |
+|     91067 | 2015-05-24     | 2015-05-31     |
+|     91068 | 2015-05-24     | 2015-05-31     |
++-----------+----------------+----------------+
+68 rows in set (0.001 sec)
+
+#4
+
+MariaDB [FACT]> select book_num, book_title, book_year from book;
++----------+-----------------------------------------------------------------------+-----------+
+| book_num | book_title                                                            | book_year |
++----------+-----------------------------------------------------------------------+-----------+
+|     5235 | Beginner's Guide to JAVA                                              |      2012 |
+|     5236 | Database in the Cloud                                                 |      2012 |
+|     5237 | Mastering the database environment                                    |      2013 |
+|     5238 | Conceptual Programming                                                |      2013 |
+|     5239 | J++ in Mobile Apps                                                    |      2013 |
+|     5240 | iOS Programming                                                       |      2013 |
+|     5241 | JAVA First Steps                                                      |      2013 |
+|     5242 | C# in Middleware Deployment                                           |      2013 |
+|     5243 | DATABASES in Theory                                                   |      2013 |
+|     5244 | Cloud-based Mobile Applications                                       |      2013 |
+|     5245 | The Golden Road to Platform independence                              |      2014 |
+|     5246 | Capture the Cloud                                                     |      2014 |
+|     5247 | Shining Through the Cloud: Sun Programming                            |      2014 |
+|     5248 | What You Always Wanted to Know About Database, But Were Afraid to Ask |      2014 |
+|     5249 | Starlight Applications                                                |      2014 |
+|     5250 | Reengineering the Middle Tier                                         |      2014 |
+|     5251 | Thoughts on Revitalizing Ruby                                         |      2014 |
+|     5252 | Beyond the Database Veil                                              |      2014 |
+|     5253 | Virtual Programming for Virtual Environments                          |      2014 |
+|     5254 | Coding Style for Maintenance                                          |      2015 |
++----------+-----------------------------------------------------------------------+-----------+
+20 rows in set (0.000 sec)
+
+
+#5
+
+MariaDB [FACT]> select distinct book_year from book;
++-----------+
+| book_year |
++-----------+
+|      2012 |
+|      2013 |
+|      2014 |
+|      2015 |
++-----------+
+4 rows in set (0.002 sec)
+
+#6
+
+MariaDB [FACT]> select distinct book_subject from book;
++--------------+
+| book_subject |
++--------------+
+| Programming  |
+| Cloud        |
+| Database     |
+| Middleware   |
++--------------+
+4 rows in set (0.000 sec)
+
+#7
+
+MariaDB [FACT]> select book_num, book_title, book_cost from book;
++----------+-----------------------------------------------------------------------+-----------+
+| book_num | book_title                                                            | book_cost |
++----------+-----------------------------------------------------------------------+-----------+
+|     5235 | Beginner's Guide to JAVA                                              |     59.95 |
+|     5236 | Database in the Cloud                                                 |     79.95 |
+|     5237 | Mastering the database environment                                    |     89.95 |
+|     5238 | Conceptual Programming                                                |     59.95 |
+|     5239 | J++ in Mobile Apps                                                    |     49.95 |
+|     5240 | iOS Programming                                                       |     79.95 |
+|     5241 | JAVA First Steps                                                      |     49.95 |
+|     5242 | C# in Middleware Deployment                                           |     59.95 |
+|     5243 | DATABASES in Theory                                                   |    129.95 |
+|     5244 | Cloud-based Mobile Applications                                       |     69.95 |
+|     5245 | The Golden Road to Platform independence                              |    119.95 |
+|     5246 | Capture the Cloud                                                     |     69.95 |
+|     5247 | Shining Through the Cloud: Sun Programming                            |    109.95 |
+|     5248 | What You Always Wanted to Know About Database, But Were Afraid to Ask |     49.95 |
+|     5249 | Starlight Applications                                                |     69.95 |
+|     5250 | Reengineering the Middle Tier                                         |     89.95 |
+|     5251 | Thoughts on Revitalizing Ruby                                         |     59.95 |
+|     5252 | Beyond the Database Veil                                              |     69.95 |
+|     5253 | Virtual Programming for Virtual Environments                          |     79.95 |
+|     5254 | Coding Style for Maintenance                                          |     49.95 |
++----------+-----------------------------------------------------------------------+-----------+
+20 rows in set (0.000 sec)
+
+
+#8
+
+MariaDB [FACT]> select check_num, book_num, pat_id, check_out_date, check_due_date from checkout order by check_out_date desc;
++-----------+----------+--------+----------------+----------------+
+| check_num | book_num | pat_id | check_out_date | check_due_date |
++-----------+----------+--------+----------------+----------------+
+|     91067 |     5252 |   1229 | 2015-05-24     | 2015-05-31     |
+|     91068 |     5238 |   1229 | 2015-05-24     | 2015-05-31     |
+|     91066 |     5242 |   1228 | 2015-05-19     | 2015-05-26     |
+|     91065 |     5244 |   1210 | 2015-05-17     | 2015-05-24     |
+|     91064 |     5236 |   1183 | 2015-05-17     | 2015-05-31     |
+|     91060 |     5235 |   1209 | 2015-05-15     | 2015-05-22     |
+|     91061 |     5246 |   1172 | 2015-05-15     | 2015-05-22     |
+|     91062 |     5254 |   1223 | 2015-05-15     | 2015-05-22     |
+|     91063 |     5243 |   1223 | 2015-05-15     | 2015-05-22     |
+|     91056 |     5254 |   1224 | 2015-05-10     | 2015-05-17     |
+|     91057 |     5238 |   1224 | 2015-05-10     | 2015-05-17     |
+|     91058 |     5252 |   1171 | 2015-05-10     | 2015-05-17     |
+|     91059 |     5249 |   1207 | 2015-05-10     | 2015-05-17     |
+|     91055 |     5246 |   1221 | 2015-05-09     | 2015-05-16     |
+|     91054 |     5236 |   1221 | 2015-05-09     | 2015-05-16     |
+|     91053 |     5240 |   1212 | 2015-05-09     | 2015-05-16     |
+|     91052 |     5236 |   1213 | 2015-05-08     | 2015-05-15     |
+|     91050 |     5236 |   1220 | 2015-05-08     | 2015-05-15     |
+|     91051 |     5237 |   1222 | 2015-05-08     | 2015-05-15     |
+|     91049 |     5240 |   1214 | 2015-05-04     | 2015-05-11     |
+|     91048 |     5249 |   1229 | 2015-05-04     | 2015-05-11     |
+|     91047 |     5236 |   1218 | 2015-04-30     | 2015-05-07     |
+|     91046 |     5235 |   1225 | 2015-04-30     | 2015-05-07     |
+|     91045 |     5242 |   1210 | 2015-04-30     | 2015-05-07     |
+|     91044 |     5248 |   1219 | 2015-04-30     | 2015-05-07     |
+|     91043 |     5244 |   1226 | 2015-04-29     | 2015-05-05     |
+|     91042 |     5235 |   1220 | 2015-04-29     | 2015-05-05     |
+|     91041 |     5236 |   1211 | 2015-04-28     | 2015-05-04     |
+|     91040 |     5237 |   1228 | 2015-04-28     | 2015-05-04     |
+|     91039 |     5240 |   1222 | 2015-04-28     | 2015-05-04     |
+|     91038 |     5238 |   1215 | 2015-04-28     | 2015-05-04     |
+|     91037 |     5235 |   1210 | 2015-04-28     | 2015-05-04     |
+|     91036 |     5237 |   1202 | 2015-04-24     | 2015-04-30     |
+|     91035 |     5248 |   1165 | 2015-04-24     | 2015-05-07     |
+|     91034 |     5240 |   1185 | 2015-04-23     | 2015-04-30     |
+|     91033 |     5235 |   1174 | 2015-04-23     | 2015-04-30     |
+|     91032 |     5238 |   1172 | 2015-04-23     | 2015-04-30     |
+|     91031 |     5252 |   1165 | 2015-04-23     | 2015-05-06     |
+|     91030 |     5242 |   1207 | 2015-04-22     | 2015-04-29     |
+|     91029 |     5244 |   1203 | 2015-04-22     | 2015-04-29     |
+|     91028 |     5236 |   1183 | 2015-04-22     | 2015-05-05     |
+|     91024 |     5235 |   1209 | 2015-04-21     | 2015-04-28     |
+|     91025 |     5246 |   1172 | 2015-04-21     | 2015-04-28     |
+|     91027 |     5243 |   1161 | 2015-04-21     | 2015-05-04     |
+|     91026 |     5254 |   1161 | 2015-04-21     | 2015-05-04     |
+|     91023 |     5249 |   1207 | 2015-04-16     | 2015-04-23     |
+|     91022 |     5252 |   1171 | 2015-04-16     | 2015-04-23     |
+|     91021 |     5238 |   1185 | 2015-04-16     | 2015-04-23     |
+|     91020 |     5254 |   1185 | 2015-04-16     | 2015-04-23     |
+|     91017 |     5240 |   1184 | 2015-04-14     | 2015-04-21     |
+|     91018 |     5236 |   1170 | 2015-04-14     | 2015-04-28     |
+|     91019 |     5246 |   1171 | 2015-04-14     | 2015-04-21     |
+|     91016 |     5236 |   1183 | 2015-04-13     | 2015-04-27     |
+|     91015 |     5237 |   1204 | 2015-04-11     | 2015-04-18     |
+|     91014 |     5236 |   1204 | 2015-04-11     | 2015-04-18     |
+|     91013 |     5240 |   1160 | 2015-04-10     | 2015-04-24     |
+|     91012 |     5249 |   1181 | 2015-04-08     | 2015-04-15     |
+|     91006 |     5235 |   1203 | 2015-04-05     | 2015-04-12     |
+|     91007 |     5244 |   1174 | 2015-04-05     | 2015-04-12     |
+|     91008 |     5248 |   1181 | 2015-04-05     | 2015-04-12     |
+|     91009 |     5242 |   1170 | 2015-04-05     | 2015-04-19     |
+|     91010 |     5235 |   1161 | 2015-04-05     | 2015-04-19     |
+|     91011 |     5236 |   1181 | 2015-04-05     | 2015-04-12     |
+|     91005 |     5236 |   1202 | 2015-03-31     | 2015-04-07     |
+|     91004 |     5237 |   1160 | 2015-03-31     | 2015-04-14     |
+|     91003 |     5240 |   1160 | 2015-03-31     | 2015-04-14     |
+|     91002 |     5238 |   1209 | 2015-03-31     | 2015-04-07     |
+|     91001 |     5235 |   1165 | 2015-03-31     | 2015-04-14     |
++-----------+----------+--------+----------------+----------------+
+68 rows in set (0.001 sec)
+
+#9
+
+MariaDB [FACT]> select book_title, book_year, book_subject from book order by book_subject asc, book_year desc, book_title asc;
++-----------------------------------------------------------------------+-----------+--------------+
+| book_title                                                            | book_year | book_subject |
++-----------------------------------------------------------------------+-----------+--------------+
+| Capture the Cloud                                                     |      2014 | Cloud        |
+| Starlight Applications                                                |      2014 | Cloud        |
+| Cloud-based Mobile Applications                                       |      2013 | Cloud        |
+| Database in the Cloud                                                 |      2012 | Cloud        |
+| Beyond the Database Veil                                              |      2014 | Database     |
+| What You Always Wanted to Know About Database, But Were Afraid to Ask |      2014 | Database     |
+| DATABASES in Theory                                                   |      2013 | Database     |
+| Mastering the database environment                                    |      2013 | Database     |
+| Reengineering the Middle Tier                                         |      2014 | Middleware   |
+| The Golden Road to Platform independence                              |      2014 | Middleware   |
+| C# in Middleware Deployment                                           |      2013 | Middleware   |
+| Coding Style for Maintenance                                          |      2015 | Programming  |
+| Shining Through the Cloud: Sun Programming                            |      2014 | Programming  |
+| Thoughts on Revitalizing Ruby                                         |      2014 | Programming  |
+| Virtual Programming for Virtual Environments                          |      2014 | Programming  |
+| Conceptual Programming                                                |      2013 | Programming  |
+| iOS Programming                                                       |      2013 | Programming  |
+| J++ in Mobile Apps                                                    |      2013 | Programming  |
+| JAVA First Steps                                                      |      2013 | Programming  |
+| Beginner's Guide to JAVA                                              |      2012 | Programming  |
++-----------------------------------------------------------------------+-----------+--------------+
+20 rows in set (0.000 sec)
+
+#10
+
+MariaDB [FACT]> select book_num, book_title, book_year
+    -> from book
+    -> where book_year = 2012;
++----------+--------------------------+-----------+
+| book_num | book_title               | book_year |
++----------+--------------------------+-----------+
+|     5235 | Beginner's Guide to JAVA |      2012 |
+|     5236 | Database in the Cloud    |      2012 |
++----------+--------------------------+-----------+
+2 rows in set (0.002 sec)
+
+#11
+
+MariaDB [FACT]> select book_num, book_title, book_year from book where book_title like '%database%';
++----------+-----------------------------------------------------------------------+-----------+
+| book_num | book_title                                                            | book_year |
++----------+-----------------------------------------------------------------------+-----------+
+|     5236 | Database in the Cloud                                                 |      2012 |
+|     5237 | Mastering the database environment                                    |      2013 |
+|     5243 | DATABASES in Theory                                                   |      2013 |
+|     5248 | What You Always Wanted to Know About Database, But Were Afraid to Ask |      2014 |
+|     5252 | Beyond the Database Veil                                              |      2014 |
++----------+-----------------------------------------------------------------------+-----------+
+5 rows in set (0.001 sec)
+
+#12
+
+MariaDB [FACT]> select check_num, book_num, check_out_date from checkout where check_out_date < '2015-04-05';
++-----------+----------+----------------+
+| check_num | book_num | check_out_date |
++-----------+----------+----------------+
+|     91001 |     5235 | 2015-03-31     |
+|     91002 |     5238 | 2015-03-31     |
+|     91003 |     5240 | 2015-03-31     |
+|     91004 |     5237 | 2015-03-31     |
+|     91005 |     5236 | 2015-03-31     |
++-----------+----------+----------------+
+5 rows in set (0.000 sec)
+
+#13
+
+MariaDB [FACT]> select book_num, book_title, book_year from book where book_year > 2013 and book_title like '%programming%';
++----------+----------------------------------------------+-----------+
+| book_num | book_title                                   | book_year |
++----------+----------------------------------------------+-----------+
+|     5247 | Shining Through the Cloud: Sun Programming   |      2014 |
+|     5253 | Virtual Programming for Virtual Environments |      2014 |
++----------+----------------------------------------------+-----------+
+2 rows in set (0.000 sec)
+
+#14
+
+MariaDB [FACT]> select book_num, book_title, book_year, book_subject, book_cost from book where book_subject in ('cloud','middleware') and book_cost > 70;
++----------+------------------------------------------+-----------+--------------+-----------+
+| book_num | book_title                               | book_year | book_subject | book_cost |
++----------+------------------------------------------+-----------+--------------+-----------+
+|     5236 | Database in the Cloud                    |      2012 | Cloud        |     79.95 |
+|     5245 | The Golden Road to Platform independence |      2014 | Middleware   |    119.95 |
+|     5250 | Reengineering the Middle Tier            |      2014 | Middleware   |     89.95 |
++----------+------------------------------------------+-----------+--------------+-----------+
+3 rows in set (0.001 sec)
+
+#15
+
+
