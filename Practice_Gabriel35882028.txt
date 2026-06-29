@@ -1,3 +1,5 @@
+Gabriel Akurang 35882028 Cohort A
+
 MariaDB [(none)]> create database FACT;
 Query OK, 1 row affected (0.007 sec)
 
